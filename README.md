@@ -14,7 +14,7 @@ A distributed banking system implemented in Java using UDP socket programming. T
 5. [Command Reference](#command-reference)
 6. [Usage Examples](#usage-examples)
 7. [Operations](#operations)
-8. [Currency Types](#currency-types)
+8. [Currency](#currency)
 9. [Technical Documentation](#technical-documentation)
 
 
@@ -254,8 +254,6 @@ Enter choice: 1
 --- Open New Account ---
 Enter your name: John Doe
 Enter password (max 16 chars): secret123
-Currency types: 0=USD, 1=EUR, 2=GBP, 3=SGD, 4=JPY
-Enter currency type (0-4): 0
 Enter initial balance: 1000
 [Client] Sent request (attempt 1, reqId=1)
 
@@ -274,8 +272,6 @@ Enter choice: 3
 Enter your name: John Doe
 Enter account number: 1000
 Enter password: secret123
-Currency types: 0=USD, 1=EUR, 2=GBP, 3=SGD, 4=JPY
-Enter currency type (0-4): 0
 Enter amount to deposit: 500
 [Client] Sent request (attempt 1, reqId=2)
 
@@ -350,8 +346,6 @@ Enter choice: 3
 Enter your name: John Doe
 Enter account number: 1000
 Enter password: secret123
-Currency types: 0=USD, 1=EUR, 2=GBP, 3=SGD, 4=JPY
-Enter currency type (0-4): 0
 Enter amount to deposit: 100
 [Client] Simulating REQUEST loss (attempt 1)
 [Client] Timeout waiting for reply (attempt 1)
@@ -412,8 +406,6 @@ Enter choice: 3
 Enter your name: John Doe
 Enter account number: 1000
 Enter password: secret123
-Currency types: 0=USD, 1=EUR, 2=GBP, 3=SGD, 4=JPY
-Enter currency type (0-4): 0
 Enter amount to deposit: 100
 [Client] Sent request (attempt 1, reqId=5)
 [Client] Timeout waiting for reply (attempt 1)
@@ -484,8 +476,6 @@ Enter choice: 3
 Enter your name: John Doe
 Enter account number: 1000
 Enter password: secret123
-Currency types: 0=USD, 1=EUR, 2=GBP, 3=SGD, 4=JPY
-Enter currency type (0-4): 0
 Enter amount to deposit: 250
 [Client] Sent request (attempt 1, reqId=1)
 
@@ -501,7 +491,6 @@ New balance: 1750.0
 Update Type: DEPOSIT
 Account Number: 1000
 Holder: John Doe
-Currency: US Dollar
 New Balance: 1750.0
 ```
 
@@ -521,8 +510,6 @@ Enter choice: 3
 Enter your name: John Doe
 Enter account number: 1000
 Enter password: wrongpassword
-Currency types: 0=USD, 1=EUR, 2=GBP, 3=SGD, 4=JPY
-Enter currency type (0-4): 0
 Enter amount to deposit: 100
 [Client] Sent request (attempt 1, reqId=6)
 
@@ -542,8 +529,6 @@ Enter choice: 4
 Enter your name: John Doe
 Enter account number: 1000
 Enter password: secret123
-Currency types: 0=USD, 1=EUR, 2=GBP, 3=SGD, 4=JPY
-Enter currency type (0-4): 0
 Enter amount to withdraw: 999999
 [Client] Sent request (attempt 1, reqId=7)
 
@@ -563,8 +548,6 @@ Enter choice: 3
 Enter your name: John Doe
 Enter account number: 9999
 Enter password: secret123
-Currency types: 0=USD, 1=EUR, 2=GBP, 3=SGD, 4=JPY
-Enter currency type (0-4): 0
 Enter amount to deposit: 100
 [Client] Sent request (attempt 1, reqId=8)
 
@@ -592,16 +575,10 @@ Details: Account not found
 | Transfer | Move money between two accounts | No |
 
 
-## Currency Types
+## Currency
 
 
-| Code | Currency | Symbol |
-|------|----------|--------|
-| 0 | US Dollar | USD |
-| 1 | Euro | EUR |
-| 2 | British Pound | GBP |
-| 3 | Singapore Dollar | SGD |
-| 4 | Japanese Yen | JPY |
+All accounts use **US Dollar (USD)** as the default currency. Currency selection has been removed from the client interface for simplicity.
 
 
 ## Technical Documentation
@@ -627,5 +604,4 @@ See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed technical documentation includ
 
 
 
-#   b a n k i n g - s y s t e m - d i s t r i b u t e d  
- 
+

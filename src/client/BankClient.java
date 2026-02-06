@@ -195,23 +195,17 @@ public class BankClient {
        String password = scanner.nextLine().trim();
 
 
-       System.out.println("Currency types: 0=USD, 1=EUR, 2=GBP, 3=SGD, 4=JPY");
-       System.out.print("Enter currency type (0-4): ");
-       int currencyCode = Integer.parseInt(scanner.nextLine().trim());
-
-
        System.out.print("Enter initial balance: ");
        float balance = Float.parseFloat(scanner.nextLine().trim());
 
 
-       // Build payload
+       // Build payload (no currency - defaults to USD)
        int payloadSize = Marshaller.getStringMarshalledSize(name) +
-                         Marshaller.getStringMarshalledSize(password) + 1 + 4;
+                         Marshaller.getStringMarshalledSize(password) + 4;
        byte[] payload = new byte[payloadSize];
        int offset = 0;
        offset = Marshaller.marshalString(name, payload, offset);
        offset = Marshaller.marshalString(password, payload, offset);
-       offset = Marshaller.marshalByte((byte) currencyCode, payload, offset);
        Marshaller.marshalFloat(balance, payload, offset);
 
 
@@ -296,24 +290,18 @@ public class BankClient {
        String password = scanner.nextLine().trim();
 
 
-       System.out.println("Currency types: 0=USD, 1=EUR, 2=GBP, 3=SGD, 4=JPY");
-       System.out.print("Enter currency type (0-4): ");
-       int currencyCode = Integer.parseInt(scanner.nextLine().trim());
-
-
        System.out.print("Enter amount to deposit: ");
        float amount = Float.parseFloat(scanner.nextLine().trim());
 
 
-       // Build payload
+       // Build payload (no currency - uses account's currency)
        int payloadSize = Marshaller.getStringMarshalledSize(name) + 4 +
-                         Marshaller.getStringMarshalledSize(password) + 1 + 4;
+                         Marshaller.getStringMarshalledSize(password) + 4;
        byte[] payload = new byte[payloadSize];
        int offset = 0;
        offset = Marshaller.marshalString(name, payload, offset);
        offset = Marshaller.marshalInt(accountNumber, payload, offset);
        offset = Marshaller.marshalString(password, payload, offset);
-       offset = Marshaller.marshalByte((byte) currencyCode, payload, offset);
        Marshaller.marshalFloat(amount, payload, offset);
 
 
@@ -352,23 +340,18 @@ public class BankClient {
        String password = scanner.nextLine().trim();
 
 
-       System.out.println("Currency types: 0=USD, 1=EUR, 2=GBP, 3=SGD, 4=JPY");
-       System.out.print("Enter currency type (0-4): ");
-       int currencyCode = Integer.parseInt(scanner.nextLine().trim());
-
-
        System.out.print("Enter amount to withdraw: ");
        float amount = Float.parseFloat(scanner.nextLine().trim());
 
 
+       // Build payload (no currency - uses account's currency)
        int payloadSize = Marshaller.getStringMarshalledSize(name) + 4 +
-                         Marshaller.getStringMarshalledSize(password) + 1 + 4;
+                         Marshaller.getStringMarshalledSize(password) + 4;
        byte[] payload = new byte[payloadSize];
        int offset = 0;
        offset = Marshaller.marshalString(name, payload, offset);
        offset = Marshaller.marshalInt(accountNumber, payload, offset);
        offset = Marshaller.marshalString(password, payload, offset);
-       offset = Marshaller.marshalByte((byte) currencyCode, payload, offset);
        Marshaller.marshalFloat(amount, payload, offset);
 
 
@@ -671,6 +654,8 @@ public class BankClient {
        System.out.println("  --help                  Show this help message");
    }
 }
+
+
 
 
 

@@ -53,28 +53,30 @@ public class RequestHandler {
    }
   
    // ==================== OPEN ACCOUNT ====================
-   // Payload: name (string) + password (string) + currency (1 byte) + initialBalance (4 bytes float)
-  
+   // Payload: name (string) + password (string) + initialBalance (4 bytes float)
+
+
    private Message handleOpenAccount(Message request) {
        byte[] payload = request.getPayload();
        int offset = 0;
-      
+
+
        try {
            Marshaller.StringResult nameResult = Marshaller.unmarshalString(payload, offset);
            String name = nameResult.value;
            offset += nameResult.bytesConsumed;
-          
+
+
            Marshaller.StringResult passResult = Marshaller.unmarshalString(payload, offset);
            String password = passResult.value;
            offset += passResult.bytesConsumed;
-          
-           int currencyCode = Marshaller.unmarshalByte(payload, offset);
-           CurrencyType currency = CurrencyType.fromCode(currencyCode);
-           offset += 1;
-          
+
+
            float initialBalance = Marshaller.unmarshalFloat(payload, offset);
-          
-           ServiceResult result = bankService.openAccount(name, password, currency, initialBalance);
+
+
+           // Default currency to USD
+           ServiceResult result = bankService.openAccount(name, password, CurrencyType.USD, initialBalance);
           
            if (result.isSuccess()) {
                byte[] replyPayload = new byte[4];
@@ -123,31 +125,33 @@ public class RequestHandler {
    }
   
    // ==================== DEPOSIT ====================
-   // Payload: name + accountNumber + password + currency + amount
-  
+   // Payload: name + accountNumber + password + amount
+
+
    private Message handleDeposit(Message request) {
        byte[] payload = request.getPayload();
        int offset = 0;
-      
+
+
        try {
            Marshaller.StringResult nameResult = Marshaller.unmarshalString(payload, offset);
            String name = nameResult.value;
            offset += nameResult.bytesConsumed;
-          
+
+
            int accountNumber = Marshaller.unmarshalInt(payload, offset);
            offset += 4;
-          
+
+
            Marshaller.StringResult passResult = Marshaller.unmarshalString(payload, offset);
            String password = passResult.value;
            offset += passResult.bytesConsumed;
-          
-           int currencyCode = Marshaller.unmarshalByte(payload, offset);
-           CurrencyType currency = CurrencyType.fromCode(currencyCode);
-           offset += 1;
-          
+
+
            float amount = Marshaller.unmarshalFloat(payload, offset);
-          
-           ServiceResult result = bankService.deposit(name, accountNumber, password, currency, amount);
+
+
+           ServiceResult result = bankService.deposit(name, accountNumber, password, amount);
 
 
            if (result.isSuccess()) {
@@ -166,6 +170,7 @@ public class RequestHandler {
 
 
    // ==================== WITHDRAW ====================
+   // Payload: name + accountNumber + password + amount
 
 
    private Message handleWithdraw(Message request) {
@@ -188,15 +193,10 @@ public class RequestHandler {
            offset += passResult.bytesConsumed;
 
 
-           int currencyCode = Marshaller.unmarshalByte(payload, offset);
-           CurrencyType currency = CurrencyType.fromCode(currencyCode);
-           offset += 1;
-
-
            float amount = Marshaller.unmarshalFloat(payload, offset);
 
 
-           ServiceResult result = bankService.withdraw(name, accountNumber, password, currency, amount);
+           ServiceResult result = bankService.withdraw(name, accountNumber, password, amount);
 
 
            if (result.isSuccess()) {
