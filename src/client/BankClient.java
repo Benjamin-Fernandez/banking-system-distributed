@@ -426,8 +426,16 @@ public class BankClient {
                        socket.receive(packet);
 
 
-                       Message callback = Message.unmarshalReply(buffer, packet.getLength());
-                       displayCallback(callback);
+                    //    Message callback = Message.unmarshalReply(buffer, packet.getLength());
+                    //    displayCallback(callback);
+
+                        Message callback = Message.unmarshalReply(buffer, packet.getLength());
+
+                        if (callback.getMessageType() == Message.TYPE_CALLBACK) {
+                            displayCallback(callback);
+                        } else {
+                            System.out.println("[Client] Ignored stray packet during monitoring.");
+                        }
 
 
                    } catch (SocketTimeoutException e) {

@@ -145,7 +145,8 @@ public class Message {
        offset = Marshaller.marshalInt(requestId, buffer, offset);
        offset = Marshaller.marshalByte(statusCode, buffer, offset);
        offset = Marshaller.marshalShort((short) payload.length, buffer, offset);
-       offset = Marshaller.marshalByte((byte) 0, buffer, offset);  // Reserved
+    //    offset = Marshaller.marshalByte((byte) 0, buffer, offset);  // Reserved
+       offset = Marshaller.marshalByte(messageType, buffer, offset); // write message type in reply header
 
 
        if (payload.length > 0) {
@@ -181,7 +182,10 @@ public class Message {
        offset += 2;
 
 
-       // Skip reserved byte
+    //    // Skip reserved byte
+    //    offset += 1;
+
+       msg.messageType = Marshaller.unmarshalByte(buffer, offset); // read message type from reply header
        offset += 1;
 
 
